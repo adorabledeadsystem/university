@@ -7,19 +7,24 @@ namespace prac2
         static void Main(string[] args)
         {
             int august = 31;
+            int date = 0;
             bool temp_flag = false;
-            while(temp_flag != true)
+            while (temp_flag != true)
             {
                 Console.WriteLine("Your date:");
-                int date = Convert.ToInt32(Console.ReadLine());
-                if(date <= 31)
+                date = Convert.ToInt32(Console.ReadLine());
+                if (date <= 31 && date != 0)
                 {
                     temp_flag = true;
+                    Console.WriteLine("Wrong! Enter date from 1 to 31");
                     break;
                 }
-                else{ temp_flag = false; }
+                else { temp_flag = false; }
             }
-            int today = DateTime.Day;
+            DateTime today = DateTime.Today;
+            int todayDay = today.Day;
+            int age = todayDay + (august - date);
+            Console.WriteLine(age);
         }
     }
 }
