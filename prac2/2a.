@@ -13,7 +13,7 @@ namespace prac2
             {
                 Console.WriteLine("Your date:");
                 date = Convert.ToInt32(Console.ReadLine());
-                if (date <= 31 && date != 0)
+                if (date <= 31 && date > 0)
                 {
                     temp_flag = true;
                     Console.WriteLine("Wrong! Enter date from 1 to 31");
