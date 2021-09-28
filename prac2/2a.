@@ -6,7 +6,7 @@ namespace prac2
     {
         static void Main(string[] args)
         {
-            int august = 31;
+                int august = 31;
             int date = 0;
             bool temp_flag = false;
             while (temp_flag != true)
@@ -16,15 +16,14 @@ namespace prac2
                 if (date <= 31 && date > 0)
                 {
                     temp_flag = true;
-                    Console.WriteLine("Wrong! Enter date from 1 to 31");
                     break;
                 }
-                else { temp_flag = false; }
+                else { temp_flag = false;Console.WriteLine("Wrong! Enter date from 1 to 31"); }
             }
             DateTime today = DateTime.Today;
             int todayDay = today.Day;
             int age = todayDay + (august - date);
-            Console.WriteLine(age);
+            Console.WriteLine("Days:" + age);
         }
     }
 }
