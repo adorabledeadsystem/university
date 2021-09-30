@@ -1,0 +1,212 @@
+using System;
+
+namespace prac2
+{
+    static class Difference
+    {
+        public static int FlagDays(int day1, int day2)
+        {
+            if (day1 < day2)
+            {
+                return 2;
+            }
+            else if (day1 > day2)
+            {
+                return 1;
+            }
+            else { return 0; }
+        }
+        public static int FlagMonths(int month1, int month2)
+        {
+            if (month1 < month2)
+            {
+                return 2;
+            }
+            else if (month1 > month2)
+            {
+                return 1;
+            }
+            else { return 0; }
+        }
+        public static int DifferenceDays(int day1, int day2, int flag)
+        {
+            int totalDays = 0;
+            int yearDay = 31;
+            switch (flag)
+            {
+                case 2:
+                    totalDays = (yearDay - day2) + (day1 - 2);
+                    break;
+                case 1:
+                    totalDays = day1 - day2;
+                    break;
+                case 0:
+                    totalDays = 0;
+                    break;
+                default:
+                    Console.WriteLine("Something went wrong");
+                    break;
+            }
+            return totalDays;
+
+        }
+        public static int DifferenceMonths(int month1, int month2, int flag, int flagDays)
+        {
+            int totalMonths = 0;
+            int yearMonth = 12;
+            switch (flag)
+            {
+                case 2:
+                    totalMonths = yearMonth - month2 + month1 - 1;
+                    break;
+                case 1:
+                    totalMonths = month1 - month2;
+                    break;
+                case 0:
+                    totalMonths = 0;
+                    break;
+                default:
+                    Console.WriteLine("Something went wrong");
+                    break;
+            }
+            if (flagDays == 2) { totalMonths--; }
+            return totalMonths;
+
+        }
+        public static int DifferenceYears(int year1, int year2, int flagMonths)
+        {
+            int totalYears = 0;
+            totalYears = year1 - year2;
+            if (flagMonths == 2) { totalYears--; }
+            return totalYears;
+        }
+    }
+    static class Calculation
+    {
+        public static int CalculatingLeapYears(int birthYear, int todayYear)
+        {
+            int counter = 0;
+            for (int i = birthYear; i < todayYear; i++)
+            {
+                if (i % 4 == 0)
+                {
+                    if (i % 100 == 0)
+                    {
+                        if (i % 400 == 0) { counter++; }
+                    }
+                    else { counter++; }
+                }
+            }
+            return counter;
+        }
+        public static int ConvertingMonthsToDays(int counter, int years)
+        {
+            int totalDays = 0;
+            for (int i = 0; i <= 12; i++)
+            {
+                switch (i)
+                {
+                    case 1:
+                    case 3:
+                    case 5:
+                    case 7:
+                    case 8:
+                    case 10:
+                    case 12:
+                        totalDays += years * 31;
+                        continue;
+                    case 4:
+                    case 6:
+                    case 9:
+                    case 11:
+                        totalDays += years * 30;
+                        continue;
+                    case 2:
+                        totalDays += (years - counter) * 28;
+                        continue;
+                }
+            }
+            totalDays += counter * 29;
+            return totalDays;
+        }
+        public static int ThisYearMonths(int totalMonths, int todayYear)
+        {
+            int resultDays = 0;
+            for (int i = 0; i <= totalMonths; i++)
+            {
+                switch (i)
+                {
+                    case 1:
+                    case 3:
+                    case 5:
+                    case 7:
+                    case 8:
+                    case 10:
+                    case 12:
+                        resultDays += 31;
+                        continue;
+                    case 4:
+                    case 6:
+                    case 9:
+                    case 11:
+                        resultDays += 30;
+                        continue;
+                    case 2:
+                        if (todayYear % 4 == 0)
+                        {
+                            if (todayYear % 100 == 0)
+                            {
+                                if (todayYear % 400 == 0) { resultDays += 29; }
+                            }
+                            else { resultDays += 29; }
+                        }
+                        else { resultDays += 28; }
+                        continue;
+                }
+            }
+            return resultDays;
+        }
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                int DateDay = 0;
+                int DateMonth = 0;
+                int DateYear = 0;
+                int Leap_count = 0;
+                bool temp_flag = false;
+
+                DateTime today = DateTime.Today;
+                 while (temp_flag != true)
+                 {
+                     Console.WriteLine("Your date:");
+                     date = Convert.ToInt32(Console.ReadLine());
+                     if (date <= 31 && date > 0)
+                     {
+                         temp_flag = true;
+                         break;
+                     }
+                     else { temp_flag = false; Console.WriteLine("Wrong! Enter date from 1 to 31"); }
+                 }
+                int birthDay = 28;
+                int todayDay = 26;
+                int birthMonth = 10;
+                int todayMonth = 9;
+                int todayYear = 2021;
+                int birthYear = 2004;
+                int flagDays = Difference.FlagDays(todayDay, birthDay);
+                int totalDays = Difference.DifferenceDays(todayDay, birthDay, flagDays);
+                int flagMonths = Difference.FlagMonths(todayMonth, birthMonth);
+                int totalMonths = Difference.DifferenceMonths(todayMonth, birthMonth, flagMonths, flagDays);
+                int totalYears = Difference.DifferenceYears(todayYear, birthYear, flagMonths);
+                Console.WriteLine(totalDays);
+                Console.WriteLine(totalMonths);
+                Console.WriteLine(totalYears);
+                Leap_count = Calculation.CalculatingLeapYears(birthYear, todayYear);
+                totalDays += Calculation.ConvertingMonthsToDays(Leap_count, totalYears);
+                totalDays += Calculation.ThisYearMonths(totalMonths, todayYear );
+                Console.WriteLine("You are" + totalDays + "day(s) old");
+            }
+        }
+    }
+}
