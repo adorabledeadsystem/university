@@ -166,46 +166,89 @@ namespace prac2
             }
             return resultDays;
         }
+        class DateFlags
+        {
+            public static int DayRLFlag()
+            {
+                bool day = false;
+                int date = 0;
+                while (day != true)
+                {
+                    Console.WriteLine("Day:");
+                    date = Convert.ToInt32(Console.ReadLine());
+                    if (date <= 31 && date > 0)
+                    {
+                        day = true;
+                        break;
+                    }
+                    else { day = false; Console.WriteLine("Wrong! Enter day from 1 to 31"); }
+                }
+                return date;
+            }
+            public static int MonthRLFlag()
+            {
+                bool month = false;
+                int date = 0;
+                while (month != true)
+                {
+                    Console.WriteLine("Month:");
+                    date = Convert.ToInt32(Console.ReadLine());
+                    if (date <= 12 && date > 0)
+                    {
+                      month = true;
+                        break;
+                    }
+                    else { month = false; Console.WriteLine("Wrong! Enter month from 1 to 12"); }
+                }
+                return date;
+            }
+            public static int YearRLineFlag(int TodayYear)
+            {
+                bool year = false;
+                int date = 0;
+                while (year != true)
+                {
+                    Console.WriteLine("Year:");
+                    date = Convert.ToInt32(Console.ReadLine());
+                    if (date <= TodayYear && date > 0)
+                    {
+                        year = true;
+                        break;
+                    }
+                    else { year = false; Console.WriteLine("Wrong! Enter year from 1 to " + TodayYear); }
+                }
+                return date;
+            }
+        }
         class Program
         {
+
             static void Main(string[] args)
             {
-                int DateDay = 0;
-                int DateMonth = 0;
-                int DateYear = 0;
                 int Leap_count = 0;
-                bool temp_flag = false;
+                int totalDays = 0;
+                int totalMonths = 0;
+                int totalYears = 0;
 
                 DateTime today = DateTime.Today;
-                 while (temp_flag != true)
-                 {
-                     Console.WriteLine("Your date:");
-                     date = Convert.ToInt32(Console.ReadLine());
-                     if (date <= 31 && date > 0)
-                     {
-                         temp_flag = true;
-                         break;
-                     }
-                     else { temp_flag = false; Console.WriteLine("Wrong! Enter date from 1 to 31"); }
-                 }
-                int birthDay = 28;
-                int todayDay = 26;
-                int birthMonth = 10;
-                int todayMonth = 9;
-                int todayYear = 2021;
-                int birthYear = 2004;
-                int flagDays = Difference.FlagDays(todayDay, birthDay);
-                int totalDays = Difference.DifferenceDays(todayDay, birthDay, flagDays);
-                int flagMonths = Difference.FlagMonths(todayMonth, birthMonth);
-                int totalMonths = Difference.DifferenceMonths(todayMonth, birthMonth, flagMonths, flagDays);
-                int totalYears = Difference.DifferenceYears(todayYear, birthYear, flagMonths);
-                Console.WriteLine(totalDays);
+                int TodayYear = today.Year;int TodayMonth = today.Month;int TodayDay = today.Day;
+                Console.WriteLine("Hello, enter your date, please: (00-00-0000)");
+                int birthDay = DateFlags.DayRLFlag();
+                int birthMonth = DateFlags.MonthRLFlag();
+                int birthYear = DateFlags.YearRLineFlag(TodayYear);
+
+                int flagDays = Difference.FlagDays(TodayDay, birthDay);
+                totalDays = Difference.DifferenceDays(TodayDay, birthDay, flagDays);
+                int flagMonths = Difference.FlagMonths(TodayMonth, birthMonth);
+                totalMonths = Difference.DifferenceMonths(TodayMonth, birthMonth, flagMonths, flagDays);
+                totalYears = Difference.DifferenceYears(TodayYear, birthYear, flagMonths);
+                /*Console.WriteLine(totalDays);
                 Console.WriteLine(totalMonths);
-                Console.WriteLine(totalYears);
-                Leap_count = Calculation.CalculatingLeapYears(birthYear, todayYear);
+                Console.WriteLine(totalYears);*/
+                Leap_count = Calculation.CalculatingLeapYears(birthYear, TodayYear);
                 totalDays += Calculation.ConvertingMonthsToDays(Leap_count, totalYears);
-                totalDays += Calculation.ThisYearMonths(totalMonths, todayYear );
-                Console.WriteLine("You are" + totalDays + "day(s) old");
+                totalDays += Calculation.ThisYearMonths(totalMonths, TodayYear);
+                Console.WriteLine("\nYou are " + totalDays + " day(s) old");
             }
         }
     }
