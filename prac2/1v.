@@ -6,21 +6,26 @@ namespace prac2
     {
         static void Main(string[] args)
         {
+            //main variables
             string user1_login = "esebchugg"; string user1_password = "123"; string user2_login = "konopalov_72"; string user2_password = "Vvbb4455";
             bool firstUser_flag = false; bool secondUser_flag = false;
-            int count = 0;
-            while (count <= 3)
+            int count = 0; //attemps counter
+            while (count <= 3) 
             {
+                //reading data
                 Console.WriteLine("Login: ");
                 string temp_login = Console.ReadLine();
                 Console.WriteLine("\nPassword: ");
                 string temp_password = Console.ReadLine();
+                //first_user check
                 if (temp_login == user1_login && temp_password == user1_password) { firstUser_flag = true; }
                 else { firstUser_flag = false; }
+                //second_user check
                 if (temp_login == user2_login && temp_password == user2_password) { secondUser_flag = true; }
                 else { secondUser_flag = false; }
+                //authorization check
                 if (firstUser_flag == true || secondUser_flag == true) { Console.WriteLine("\n---You successfully authorized!---"); break; }
-                else { Console.WriteLine("\n---Invalid username or password. Try again---\n"); count++; }
+                else { Console.WriteLine("\n---Invalid username or password. Try again---\n"); count++; } //+1 attemp
             }
         }
     }
