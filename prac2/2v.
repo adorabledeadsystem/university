@@ -1,9 +1,11 @@
-using System;
+using System; 
 
-namespace prac2
+
+namespace prac2_test
 {
-    static class Difference
+    static class Difference //finding out how old is user(years-months-days)
     {
+        //searching if the number of "birthDay" is bigger than "todayDay" 
         public static int FlagDays(int day1, int day2)
         {
             if (day1 < day2)
@@ -14,8 +16,9 @@ namespace prac2
             {
                 return 1;
             }
-            else { return 0; }
+            else { return 0; } //if they are same
         }
+        //searching if the number of "birthMonth" is bigger than "todayMonth" 
         public static int FlagMonths(int month1, int month2)
         {
             if (month1 < month2)
@@ -26,16 +29,62 @@ namespace prac2
             {
                 return 1;
             }
-            else { return 0; }
+            else { return 0; } //if they are same
         }
-        public static int DifferenceDays(int day1, int day2, int flag)
+        //checking out if birthMonth has 29 days
+        public static int FlagBirthMonth(int month1, int todayYear)
+        {
+            int flag = 0;
+            if (todayYear % 4 == 0)
+            {
+                if (todayYear % 100 == 0)
+                {
+                    if (todayYear % 400 == 0) { flag = 1; }
+                    
+                }
+                else { flag = 1; }
+            }
+            switch (month1)
+            {
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    flag = 2;
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    flag = 3;
+                    break;
+            }
+            return flag;
+        }
+        public static int DifferenceDays(int day1, int day2, int flag, int flagBirthMonth, int flagMonths)
         {
             int totalDays = 0;
             int yearDay = 31;
             switch (flag)
             {
                 case 2:
-                    totalDays = (yearDay - day2) + (day1 - 2);
+                    totalDays = yearDay - day2 + day1;
+                    //if month 29 days or 31 days
+                    switch (flagBirthMonth) {
+                        case 1:
+                            totalDays++;
+                            break;
+                        case 2:
+                            totalDays--;
+                            break;
+                        case 3:
+                            totalDays++;
+                            break;
+                    }
+                    if(flagMonths == 1 || flagMonths == 0) { totalDays --; }
                     break;
                 case 1:
                     totalDays = day1 - day2;
@@ -53,11 +102,12 @@ namespace prac2
         public static int DifferenceMonths(int month1, int month2, int flag, int flagDays)
         {
             int totalMonths = 0;
+
             int yearMonth = 12;
             switch (flag)
             {
                 case 2:
-                    totalMonths = yearMonth - month2 + month1 - 1;
+                    totalMonths = yearMonth - month2 + month1;
                     break;
                 case 1:
                     totalMonths = month1 - month2;
@@ -69,8 +119,12 @@ namespace prac2
                     Console.WriteLine("Something went wrong");
                     break;
             }
-            if (flagDays == 2) { totalMonths--; }
+            if (flagDays == 2)
+            {
+                totalMonths--;
+            }
             return totalMonths;
+
 
         }
         public static int DifferenceYears(int year1, int year2, int flagMonths)
@@ -81,8 +135,9 @@ namespace prac2
             return totalYears;
         }
     }
-    static class Calculation
+    static class Calculation //converting age to days(integer, not float or double)
     {
+        //calculating how many years are leap between "birthYear" and "todayYear"
         public static int CalculatingLeapYears(int birthYear, int todayYear)
         {
             int counter = 0;
@@ -97,12 +152,13 @@ namespace prac2
                     else { counter++; }
                 }
             }
-            return counter;
+            return counter; //leap year counter
         }
+        //converting months to days from 1 to 12 multiplying by "totalYears"
         public static int ConvertingMonthsToDays(int counter, int years)
         {
             int totalDays = 0;
-            for (int i = 0; i <= 12; i++)
+            for (int i = 1; i <= 12; i++)
             {
                 switch (i)
                 {
@@ -122,17 +178,18 @@ namespace prac2
                         totalDays += years * 30;
                         continue;
                     case 2:
-                        totalDays += (years - counter) * 28;
+                        totalDays += (years - counter) * 28; //non-leap years
                         continue;
                 }
             }
-            totalDays += counter * 29;
-            return totalDays;
+            totalDays += counter * 29; //leap years
+            return totalDays; //result without "todayYear"
         }
-        public static int ThisYearMonths(int totalMonths, int todayYear)
+        //converting "totalMonths" to days checking out if "todayYear" is leap
+        public static int ThisYearMonths(int totalMonths, int todayYear, int birthMonth, int todayMonth, int todayDay, int birthDay)
         {
-            int resultDays = 0;
-            for (int i = 0; i <= totalMonths; i++)
+            int totalDays = 0;
+            for (int i = 1; i <= totalMonths; i++)
             {
                 switch (i)
                 {
@@ -143,31 +200,46 @@ namespace prac2
                     case 8:
                     case 10:
                     case 12:
-                        resultDays += 31;
+                        totalDays += 31;
                         continue;
                     case 4:
                     case 6:
                     case 9:
                     case 11:
-                        resultDays += 30;
+                        totalDays += 30;
                         continue;
                     case 2:
                         if (todayYear % 4 == 0)
                         {
                             if (todayYear % 100 == 0)
                             {
-                                if (todayYear % 400 == 0) { resultDays += 29; }
+                                if (todayYear % 400 == 0) { totalDays += 29; }
+                                else { totalDays += 28; }
                             }
-                            else { resultDays += 29; }
+                            else { totalDays += 29; }
                         }
-                        else { resultDays += 28; }
+                        else { totalDays += 28; }
                         continue;
                 }
+
             }
-            return resultDays;
+            //some calculation corrections
+            if (birthMonth < todayMonth)
+            {
+                if (birthDay > todayDay) { totalDays += 3; }
+                else if(birthDay == todayDay) { totalDays --; }
+                else { totalDays++; }
+            }
+            else if (birthMonth > todayMonth || birthMonth == todayMonth)
+            {
+                if (birthDay > todayDay) { totalDays-= 2; }
+                else if(birthDay == todayDay) { totalDays--; }
+            }
+            return totalDays;
         }
-        class DateFlags
+        class DateFlags //reading data
         {
+            //"todayDay" reading
             public static int DayRLFlag()
             {
                 bool day = false;
@@ -181,27 +253,29 @@ namespace prac2
                         day = true;
                         break;
                     }
-                    else { day = false; Console.WriteLine("Wrong! Enter day from 1 to 31"); }
+                    else { day = false; Console.WriteLine("Wrong! Enter day from 1 to 31"); }//checking out error 
                 }
-                return date;
+                return date;//day
             }
+            //"todayMonth" reading
             public static int MonthRLFlag()
             {
                 bool month = false;
                 int date = 0;
-                while (month != true)
+                while (month != true)    
                 {
                     Console.WriteLine("Month:");
                     date = Convert.ToInt32(Console.ReadLine());
                     if (date <= 12 && date > 0)
                     {
-                      month = true;
+                        month = true;
                         break;
                     }
-                    else { month = false; Console.WriteLine("Wrong! Enter month from 1 to 12"); }
+                    else { month = false; Console.WriteLine("Wrong! Enter month from 1 to 12"); }//checking out error 
                 }
-                return date;
+                return date;//month
             }
+            //"todayYear" reading
             public static int YearRLineFlag(int TodayYear)
             {
                 bool year = false;
@@ -215,9 +289,9 @@ namespace prac2
                         year = true;
                         break;
                     }
-                    else { year = false; Console.WriteLine("Wrong! Enter year from 1 to " + TodayYear); }
+                    else { year = false; Console.WriteLine("Wrong! Enter year from 1 to " + TodayYear); }//checking out error 
                 }
-                return date;
+                return date;//year
             }
         }
         class Program
@@ -225,31 +299,42 @@ namespace prac2
 
             static void Main(string[] args)
             {
+                //main variables
                 int Leap_count = 0;
                 int totalDays = 0;
                 int totalMonths = 0;
                 int totalYears = 0;
 
+                //Reading date data
                 DateTime today = DateTime.Today;
-                int TodayYear = today.Year;int TodayMonth = today.Month;int TodayDay = today.Day;
+                int TodayYear = today.Year; int TodayMonth = today.Month; int TodayDay = today.Day; //everyday programm =) (real date)
                 Console.WriteLine("Hello, enter your date, please: (00-00-0000)");
                 int birthDay = DateFlags.DayRLFlag();
                 int birthMonth = DateFlags.MonthRLFlag();
                 int birthYear = DateFlags.YearRLineFlag(TodayYear);
 
-                int flagDays = Difference.FlagDays(TodayDay, birthDay);
-                totalDays = Difference.DifferenceDays(TodayDay, birthDay, flagDays);
+                //calculating right user's age
+                int flagBirthMonth = Difference.FlagBirthMonth(birthMonth, TodayYear);
+                int flagDays = Difference.FlagDays(TodayDay, birthDay) ;
                 int flagMonths = Difference.FlagMonths(TodayMonth, birthMonth);
+                totalDays = Difference.DifferenceDays(TodayDay, birthDay, flagDays, flagBirthMonth, flagMonths);
                 totalMonths = Difference.DifferenceMonths(TodayMonth, birthMonth, flagMonths, flagDays);
                 totalYears = Difference.DifferenceYears(TodayYear, birthYear, flagMonths);
-                /*Console.WriteLine(totalDays);
-                Console.WriteLine(totalMonths);
-                Console.WriteLine(totalYears);*/
+                Console.WriteLine("\nYou are : " + totalYears + " years");
+                Console.WriteLine(totalMonths + " months");
+                Console.WriteLine(totalDays + " days old");
+
+                //converting to days(integer, not float or double)
                 Leap_count = Calculation.CalculatingLeapYears(birthYear, TodayYear);
                 totalDays += Calculation.ConvertingMonthsToDays(Leap_count, totalYears);
-                totalDays += Calculation.ThisYearMonths(totalMonths, TodayYear);
-                Console.WriteLine("\nYou are " + totalDays + " day(s) old");
+                totalDays += Calculation.ThisYearMonths(totalMonths, TodayYear, birthMonth, TodayMonth, TodayDay, birthDay);
+                Console.WriteLine("\nIt is " + totalDays + " in days");
             }
         }
     }
 }
+/*program is tested in all possible cases(f.e. birthDay > todayDay; birthDay == todayDay; birthDay < todayDay)
+  bag report:
+  *no condition (in Difference.DifferenceDays) to calculate if TodayMonth has 31, 30 or 28/29 days
+  *no condition (in Program. Main) to prevent if user enter month == 2 and day > 28(if birthYear is not leap) or day > 29(if birthYear is leap)
+ */
