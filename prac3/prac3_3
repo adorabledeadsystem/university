@@ -1,0 +1,31 @@
+using System;
+
+namespace prac3_3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string number = "";
+            int number_int = 0;
+            int theBiggest = 0;
+            bool flag = false;
+            Console.WriteLine("Enter numbers one at a time: ");
+            while(flag != true)
+            {
+                number = Console.ReadLine();
+                if (number == ".")
+                {
+                    flag = true;
+                    Console.WriteLine("End of reading data");
+                }
+                else
+                {
+                    number_int = Convert.ToInt32(number);
+                    if (number_int > theBiggest) { theBiggest = number_int; }
+                }
+            } 
+            Console.WriteLine("The biggest number is: " + theBiggest);
+        }
+    }
+}
