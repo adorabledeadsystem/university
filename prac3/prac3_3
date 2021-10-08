@@ -11,20 +11,21 @@ namespace prac3_3
             int theBiggest = 0;
             bool flag = false;
             Console.WriteLine("Enter numbers one at a time: ");
-            while(flag != true)
+            do
             {
-                number = Console.ReadLine();
-                if (number == ".")
-                {
-                    flag = true;
-                    Console.WriteLine("End of reading data");
-                }
-                else
-                {
-                    number_int = Convert.ToInt32(number);
-                    if (number_int > theBiggest) { theBiggest = number_int; }
-                }
-            } 
+                    number = Console.ReadLine();
+                    if (number == ".") { flag = true; }
+                    else if (number == "") { Console.WriteLine("No number entered"); continue; }
+                    else
+                    {
+                        number_int = Convert.ToInt32(number);
+                        if (number_int > theBiggest)
+                        {
+                            theBiggest = number_int;
+                        }
+
+                    }
+            } while (flag != true);
             Console.WriteLine("The biggest number is: " + theBiggest);
         }
     }
