@@ -8,22 +8,22 @@ namespace prac3_1
         {
             int amount = 0;
             int every_number = 0;
-            int theBiggest = 0;
+            int theBiggest = Int32.MinValue;
             int count = 0;
             Console.WriteLine("Enter amount of numbers:");
             amount = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter number one at a time:");
-            do
+            for(int i = 0; i < amount; i++)
             {
                 every_number = Convert.ToInt32(Console.ReadLine());
-                if(every_number > theBiggest)
+                if (every_number > theBiggest)
                 {
                     theBiggest = every_number;
                 }
                 count++;
             }
-            while (count < amount);
-            Console.WriteLine("The biggest number is: " +theBiggest);
+
+            Console.WriteLine("The biggest number is: " + theBiggest);
 
         }
     }
