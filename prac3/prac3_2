@@ -8,13 +8,13 @@ namespace prac3_2
         {
             string number = ".";
             int number_int = 0;
-            int theBiggest = 0;
+            int theBiggest = Int32.MinValue;
             Console.WriteLine("Enter numbers one at a time: ");
-            for(; ;)
+            for (; ; )
             {
                 number = Console.ReadLine();
-                if(number == ".") {break; }
-                if(number == "") { Console.WriteLine("No number entered"); break; }
+                if (number == ".") { break; }
+                if (number == "") { Console.WriteLine("No number entered"); continue; }
                 else
                 {
                     number_int = Convert.ToInt32(number);
