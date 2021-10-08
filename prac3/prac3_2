@@ -6,15 +6,16 @@ namespace prac3_2
     {
         static void Main(string[] args)
         {
-            string number = ".";
+            string number = "";
             int number_int = 0;
             int theBiggest = Int32.MinValue;
+            bool flag = false;
             Console.WriteLine("Enter numbers one at a time: ");
-            for (; ; )
+            while (flag != true)
             {
                 number = Console.ReadLine();
-                if (number == ".") { break; }
-                if (number == "") { Console.WriteLine("No number entered"); continue; }
+                if (number == ".") { flag = true;}
+                else if (number == "") { Console.WriteLine("No number entered"); continue; }
                 else
                 {
                     number_int = Convert.ToInt32(number);
