@@ -10,8 +10,9 @@ namespace prac4_3
             int array_size = Convert.ToInt32(Console.ReadLine());
             int[] main_array = new int[array_size];
             int count = 0;
-            for (int i = 0; i < array_size; i++) {
-                Console.WriteLine("Insert array number: ");
+            Console.WriteLine("Insert array number: ");
+            for (int i = 0; i < array_size; i++)
+            {
                 main_array[i] = Convert.ToInt32(Console.ReadLine());
                 if (main_array[i] % 2 == 0)
                 {
@@ -22,12 +23,13 @@ namespace prac4_3
             for (int i = 0, j = 0; i < array_size; i++)
             {
                 if (main_array[i] % 2 == 0)
-                   {
-                       sub_array[j] = main_array[i];
-                        j++;
-                   }
+                {
+                    sub_array[j] = main_array[i];
+                    j++;
+                }
             }
-            for (int i = 0; i < array_size; i++) {
+            for (int i = 0; i < array_size; i++)
+            {
                 for (int j = 0; j < count - 1; j++)
                 {
                     if (sub_array[j] > sub_array[j + 1])
@@ -38,12 +40,13 @@ namespace prac4_3
                     }
                 }
             }
-      
+
             Console.WriteLine("New array: ");
             for (int j = 0; j < count; j++)
             {
                 Console.WriteLine(sub_array[j] + " ");
             }
+     
         }
     }
 }
