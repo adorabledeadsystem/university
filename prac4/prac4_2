@@ -1,0 +1,55 @@
+using System;
+
+namespace prac4_2
+{
+    class MainClass
+    {
+        static void Main(string[] args)
+        {
+            int dlina; //длинна матрицы или строка 
+            int vis; //высота матрицы или столбец 
+
+            Console.Write("Введите длину матрицы: ");
+            dlina = int.Parse(Console.ReadLine());
+            Console.Write("Введите высоту матрицы : ");
+            vis = int.Parse(Console.ReadLine());
+            int[,] array = new int[dlina, vis];
+            int max = array[0,0];
+            for (int i = 0; i < dlina; i++)
+            {
+                for (int j = 0; j < vis; j++)
+                {
+                    Console.Write("Введите число: ");
+                    array[i, j] = int.Parse(Console.ReadLine());
+                }
+            }
+            Console.WriteLine();
+            for (int i = 0; i < dlina; i++)
+            {
+                for (int j = 0; j < vis; j++)
+                {
+                    Console.Write("{0} ", array[i, j]);
+
+                }
+                Console.WriteLine();
+            }
+            for (int i = 0; i < dlina; i++)
+            {
+                int min = array[i, 0];
+                for (int j = 0; j < vis; j++)
+                {
+                    if(array[i,j] < min)
+                    {
+                        min = array[i, j];
+                    }
+
+                }
+                if (min > max)
+                {
+                    max = min;
+                }
+            }
+            Console.WriteLine("Результат " + max);
+        }
+    }
+}
