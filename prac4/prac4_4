@@ -1,0 +1,86 @@
+using System;
+namespace prac4_4
+{
+    class MainClass
+    {
+        static void Main(string[] args)
+        {
+            int p = 1;
+            int k = 0;
+            int i, j = 0;
+            int l = 0;
+            int dlina; //длинна матрицы или строка 
+            int vis; //высота матрицы или столбец 
+            Console.Write("Введите длину матрицы: ");
+            dlina = int.Parse(Console.ReadLine());
+            Console.Write("Введите высоту матрицы : ");
+            vis = int.Parse(Console.ReadLine());
+            int[,] array = new int[dlina, vis];
+            int[] array2 = new int[dlina * vis];
+            for (i = 0; i < dlina; i++)
+            {
+                for (j = 0; j < vis; j++)
+                {
+                    Console.Write("Введите число: ");
+                    array[i, j] = int.Parse(Console.ReadLine());
+                }
+            }
+            for (i = 0; i < dlina; i++)
+            {
+                for (j = 0; j < vis; j++)
+                {
+                    array2[l] = array[i, j];
+                    l++;
+                }
+            }
+            for (i = 0; i < dlina; i++)
+            {
+                for (j = 0; j < vis; j++)
+                {
+                    Console.Write("{0, -4}", array[i, j]);
+                }
+                Console.WriteLine();
+            }
+        
+            Array.Sort(array2);
+
+            for (l = 0; l < dlina*vis; l++)
+            {
+                    Console.Write(array2[l]);
+            }
+                 while (i < vis * dlina)
+             {
+                 k++;
+                 for (j = k - 1; i  < dlina - k + 1; i++)
+                 {
+                     array[i, j] = array2[l];
+                     l++;
+                 }
+                 for (j = k; j < vis - k + 1; j++)
+                 {
+                     array[i, j] = array2[l];
+                     l++;
+                 }
+                 for (j = vis - k + 1; i >= k - 1; i--)
+                 {
+                     array[i, j] = array2[l];
+                     l++;
+                 }
+                 for (j = dlina - k - 1; j >= k; j--)
+                 {
+                     array[i, j] = array2[l];
+                     l++;
+                 }
+             }
+            for (i = 0; i < dlina; i++)
+            {
+                for (j = 0; j < vis; j++)
+                {
+                    Console.Write("{0, -4}", array[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+        }
+    }
+}
