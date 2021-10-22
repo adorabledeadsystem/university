@@ -14,12 +14,15 @@ namespace prac4_2
             Console.Write("Введите высоту матрицы : ");
             vis = int.Parse(Console.ReadLine());
             int[,] array = new int[dlina, vis];
-            int max = array[0,0];
+            int[] temp = new int[vis];
+
+
             for (int i = 0; i < dlina; i++)
             {
                 for (int j = 0; j < vis; j++)
                 {
                     Console.Write("Введите число: ");
+                    
                     array[i, j] = int.Parse(Console.ReadLine());
                 }
             }
@@ -33,7 +36,7 @@ namespace prac4_2
                 }
                 Console.WriteLine();
             }
-            for (int i = 0; i < dlina; i++)
+            for (int i = 0, l = 0; i < dlina; i++,l++)
             {
                 int min = array[i, 0];
                 for (int j = 0; j < vis; j++)
@@ -42,14 +45,25 @@ namespace prac4_2
                     {
                         min = array[i, j];
                     }
-
                 }
-                if (min > max)
+                temp[l] = min;
+                
+            }
+            Console.Write("Массив минимумов");
+            for (int l = 0; l < vis; l++)
+            {
+                Console.Write(temp[l] + " ");
+
+            }
+            int max = temp[0];
+            for (int l = 0; l < vis; l++)
+            {
+                if (temp[l] > max)
                 {
-                    max = min;
+                    max = temp[l];
                 }
             }
-            Console.WriteLine("Результат " + max);
+            Console.WriteLine("\nРезультат " + max);
         }
     }
 }
