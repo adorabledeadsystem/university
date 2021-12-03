@@ -1,4 +1,7 @@
- string s = "";
+using System;
+using System.Text;
+using System.IO;
+string s = "";
             int counter = 0;
             string FileName = "C:\\file\\textfile.txt";
 
