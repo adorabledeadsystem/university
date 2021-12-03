@@ -1,53 +1,40 @@
-using System;
-using System.Text;
-using System.IO;
-namespace prac6_4
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            string s = "";
-
+ string s = "";
             int counter = 0;
             string FileName = "C:\\file\\textfile.txt";
-            
+
             FileInfo file = new FileInfo(FileName);
             if (!file.Exists)
             {
                 Console.WriteLine("File doesnt exist");
             }
             StreamReader sr = new StreamReader(FileName, System.Text.Encoding.Default);
+            Console.WriteLine("File 1: ");
             while ((s = sr.ReadLine()) != null)
             {
-                    counter++;
-                    Console.WriteLine(s);
+                counter++;
+                Console.WriteLine(s);
             }
             string[] textMass = new string[counter];
+            sr.Close();
             int i = 0;
-            while((s = sr.ReadLine()) != null)
+            StreamReader srArr = new StreamReader(FileName, System.Text.Encoding.Default);
+            while ((s = srArr.ReadLine()) != null)
             {
-                textMass[i] = s;
-                Console.WriteLine(textMass[i]);
+                textMass[i] = s + "\n";
                 i++;
             }
-            Console.WriteLine();
-            Console.WriteLine(counter);
-            sr.Close();
+            Console.WriteLine("Amount of strings: "+counter);
+            srArr.Close();
             string FileName2 = "C:\\file\\textfile2.txt";
             StreamWriter sw = new StreamWriter(FileName2);
-            for(i = 0; i < counter; i++)
+            for (i = counter - 1; i >= 0; i--)
             {
                 sw.Write(textMass[i]);
             }
             sw.Close();
             StreamReader sr2 = new StreamReader(FileName2);
+            Console.WriteLine("File 2: ");
             while ((s = sr2.ReadLine()) != null)
             {
                 Console.WriteLine(s);
             }
-
-
-        }
-    }
-}
