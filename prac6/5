@@ -1,0 +1,32 @@
+using System;
+using System.IO;
+using System.Text;
+
+namespace prac8_5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string filename = "C:\\file\\file.txt";
+            string letters;
+            int res = 0;
+            FileInfo file = new FileInfo(filename);
+            if (!file.Exists)
+            {
+                Console.WriteLine("File doesnt exist");
+            }    
+            StreamReader sr = new StreamReader(filename, System.Text.Encoding.Default);
+                while((letters = sr.ReadLine()) != null)
+                {
+                    int a = letters.Length - letters.Replace("E", "").Length;
+                    int b = letters.Length - letters.Replace("e", "").Length;
+                    res = a + b + res;
+                }
+                sr.Close();
+                Console.WriteLine("Result: " + res);
+            }
+
+        }
+    }
+}
